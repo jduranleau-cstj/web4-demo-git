@@ -1,6 +1,7 @@
 body {
     margin: 0px;
     position: relative;
+    overflow: hidden;
 }
 
 .balle {

@@ -7,8 +7,8 @@ for (let balise of balises_balles) {
         balise: balise,
         x: random(100, window.innerWidth - 100),
         y: random(100, window.innerHeight - 100),
-        vx: random(-1, 1),
-        vy: random(-1, 1),
+        vx: random(-1, 1) * 2,
+        vy: random(-1, 1) * 2,
         grosseur: 20,
     }
 
@@ -22,6 +22,21 @@ function update() {
 
         balle.x += balle.vx
         balle.y += balle.vy
+
+        // Bouncing
+
+        if (balle.x < balle.grosseur / 2) { // gauche
+            balle.vx *= -1
+        }
+        if (balle.x > window.innerWidth - balle.grosseur / 2) { // droite
+            balle.vx *= -1
+        }
+        if (balle.y < balle.grosseur / 2) { // haut
+            balle.vy *= -1
+        }
+        if (balle.y > window.innerHeight - balle.grosseur / 2) { // bas
+            balle.vy *= -1
+        }
 
         balle.balise.style.left = balle.x + "px"
         balle.balise.style.top = balle.y + "px"
