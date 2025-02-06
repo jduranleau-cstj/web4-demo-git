@@ -19,20 +19,28 @@ for (let i = 0; i < 100; i++) {
 
     balle.balise.style.width = balle.grosseur + "px"
 
-    // Alpha selon la grosseur pour créer une "distance?"
-    const alpha = 0.4 + (balle.grosseur - 10) / 30
-    balle.balise.style.backgroundColor = couleurRandom(alpha)
+    balle.balise.style.backgroundColor = couleurRandomAvecProfondeur(balle)
+
+    // Plus la balle est grosse et plus elle est en avant
     balle.balise.style.zIndex = balle.grosseur
 
 
     balles.push(balle)
 }
 
+function couleurRandomAvecProfondeur(balle) {
+    const alpha = 0.4 + (balle.grosseur - 10) / 30
+    return couleurRandom(alpha)
+}
+
 function couleurRandom(alpha = 1) {
-    const r = random(0, 255)
-    const g = random(0, 255)
-    const b = random(0, 255)
-    return `rgb(${r}, ${g}, ${b}, ${alpha})`
+    // Pretty colors
+    return `hsla(${random(0, 360)}, 80%, 50%, ${alpha})`
+
+    // const r = random(0, 255)
+    // const g = random(0, 255)
+    // const b = random(0, 255)
+    // return `rgb(${r}, ${g}, ${b}, ${alpha})`
 }
 
 function update() {
@@ -42,18 +50,28 @@ function update() {
         balle.x += balle.vx
         balle.y += balle.vy
 
+        let collision_avec_mur = false
+
         // Rebonds
         if (balle.x < balle.grosseur / 2) { // gauche
             balle.vx *= -1
+            collision_avec_mur = true
         }
         if (balle.x > window.innerWidth - balle.grosseur / 2) { // droite
             balle.vx *= -1
+            collision_avec_mur = true
         }
         if (balle.y < balle.grosseur / 2) { // haut
             balle.vy *= -1
+            collision_avec_mur = true
         }
         if (balle.y > window.innerHeight - balle.grosseur / 2) { // bas
             balle.vy *= -1
+            collision_avec_mur = true
+        }
+
+        if (collision_avec_mur) {
+            balle.balise.style.backgroundColor = couleurRandomAvecProfondeur(balle)
         }
 
         // Mise à jour du visuel
