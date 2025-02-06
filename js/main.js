@@ -14,7 +14,7 @@ for (let i = 0; i < 100; i++) {
         y: random(100, window.innerHeight - 100),
         vx: random(-1, 1) * 2,
         vy: random(-1, 1) * 2,
-        grosseur: random(10, 30),
+        grosseur: Math.floor(random(10, 30)),
     }
 
     balle.balise.style.width = balle.grosseur + "px"
@@ -24,6 +24,13 @@ for (let i = 0; i < 100; i++) {
     // Plus la balle est grosse et plus elle est en avant
     balle.balise.style.zIndex = balle.grosseur
 
+    balle.balise.addEventListener("click", e => {
+        if (random(0, 1) > 0.9) {
+            window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank")
+        } else {
+            balle.balise.style.backgroundImage = `url("http://placecats.com/${balle.grosseur}/${balle.grosseur}")`
+        }
+    })
 
     balles.push(balle)
 }
